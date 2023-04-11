@@ -1,6 +1,6 @@
 {
   "name": "loading-pro",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "author": "Mien",
   "license": "MIT",
   "peerDependencies": {},
@@ -13,6 +13,6 @@
   "keywords": ["loading", "spinner", "timeout"],
   "repository": {
     "type": "git",
-    "url": "https://kevin_xm.coding.net/p/kevin_xm/d/loading/git"
+    "url": "https://github.com/qingyueshuzhi/loading-pro.git"
   }
 }

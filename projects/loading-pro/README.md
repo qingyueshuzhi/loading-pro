@@ -2,7 +2,6 @@
 
 A simple library for loading status management.
 
-> Tips: Unstable, avoid production usage
 ### How to use
 
 npm
