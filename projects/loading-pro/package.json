@@ -1,0 +1,18 @@
+{
+  "name": "loading-pro",
+  "version": "1.0.6",
+  "author": "Mien",
+  "license": "MIT",
+  "peerDependencies": {},
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "shortid": "2.2.16",
+    "rxjs": "~7.8.0"
+  },
+  "sideEffects": false,
+  "keywords": ["loading", "spinner", "timeout"],
+  "repository": {
+    "type": "git",
+    "url": "https://kevin_xm.coding.net/p/kevin_xm/d/loading/git"
+  }
+}
