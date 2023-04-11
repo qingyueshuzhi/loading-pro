@@ -1,16 +1,20 @@
 {
   "name": "loading-pro",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "author": "Mien",
   "license": "MIT",
   "peerDependencies": {},
   "dependencies": {
     "tslib": "^2.3.0",
-    "shortid": "2.2.16",
-    "rxjs": "~7.8.0"
+    "rxjs": "~7.8.0",
+    "nanoid": "^4.0.2"
   },
   "sideEffects": false,
-  "keywords": ["loading", "spinner", "timeout"],
+  "keywords": [
+    "loading",
+    "spinner",
+    "timeout"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/qingyueshuzhi/loading-pro.git"

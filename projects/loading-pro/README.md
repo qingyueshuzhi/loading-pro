@@ -145,3 +145,7 @@ loading.showSpinner = show;
 
 - add show spinner set function
 - support user manual inject svg slot as string template
+
+### Apr 11, 2023
+
+- change **shortid** to **nanoid**

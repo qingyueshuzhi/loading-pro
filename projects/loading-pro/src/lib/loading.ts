@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import * as shortid from 'shortid';
+import { nanoid } from 'nanoid';
 
 import { ConsoleService } from './console';
 import { ILoading, ILoadingStatus } from './model';
@@ -61,7 +61,7 @@ export class LoadingProService {
    * @returns
    */
   public startIndividualLoading(id?: string) {
-    let loadingId: string = id ?? shortid.generate();
+    let loadingId: string = id ?? nanoid();
     const timeoutId = setTimeout(() => {
       this.stopIndividualLoading(loadingId);
       this._loggingService.error('loading ended after timeout', loadingId);
@@ -79,7 +79,7 @@ export class LoadingProService {
   }
 
   public show(id?: string): string {
-    let loadingId: string = id ?? shortid.generate();
+    let loadingId: string = id ?? nanoid();
 
     this._loading.next({ loading: true, id: loadingId });
     this._spinnerService.show();
