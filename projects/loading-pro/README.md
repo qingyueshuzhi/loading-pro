@@ -149,3 +149,7 @@ loading.showSpinner = show;
 ### Apr 11, 2023
 
 - change **shortid** to **nanoid**
+
+### Apr 12, 2023
+
+- Individual loading stop issue fix

@@ -5,7 +5,6 @@ import { ConsoleService } from './console';
 import { ILoading, ILoadingStatus } from './model';
 import { SpinnerService } from './spinner';
 import { defaultSVG, defaultStyle } from './constant';
-import { style } from '@angular/animations';
 
 export class LoadingProService {
   private readonly _loading: BehaviorSubject<ILoadingStatus> =
@@ -13,6 +12,7 @@ export class LoadingProService {
   private _timeoutId!: ReturnType<typeof setTimeout>;
   private _timeout = 60000; // 60s
   private _loadingIdSet: Set<string> = new Set();
+  private _individualLoadingIdSet: Set<string> = new Set();
   private _loggingService!: ConsoleService;
   private readonly mainLoadingKey = 'Main_Loading';
   private _loadingMap: Map<string, ReturnType<typeof setTimeout>> = new Map();
@@ -61,29 +61,30 @@ export class LoadingProService {
    * @returns
    */
   public startIndividualLoading(id?: string) {
-    let loadingId: string = id ?? nanoid();
+    let loadingId: string = id ?? nanoid(8);
     const timeoutId = setTimeout(() => {
       this.stopIndividualLoading(loadingId);
       this._loggingService.error('loading ended after timeout', loadingId);
     }, this._timeout);
     this._loadingMap.set(loadingId, timeoutId);
-    this._loadingIdSet.add(loadingId);
+    this._individualLoadingIdSet.add(loadingId);
 
     return loadingId;
   }
 
   public stopIndividualLoading(id: string) {
+    if (!this._loadingMap.has(id)) return;
     clearTimeout(this._loadingMap.get(id));
     this._loadingMap.delete(id);
-    this._loadingIdSet.delete(id);
+
+    if (!this._individualLoadingIdSet.has(id)) return;
+    this._individualLoadingIdSet.delete(id);
   }
 
   public show(id?: string): string {
-    let loadingId: string = id ?? nanoid();
-
+    let loadingId: string = id ?? nanoid(8);
     this._loading.next({ loading: true, id: loadingId });
     this._spinnerService.show();
-    this._loadingIdSet.add(loadingId);
 
     if (Boolean(this._timeoutId)) {
       clearTimeout(this._timeoutId);
@@ -93,6 +94,7 @@ export class LoadingProService {
       this._loggingService.error('loading ended after timeout');
     }, this._timeout);
 
+    this._loadingIdSet.add(loadingId);
     this._loadingMap.set(this.mainLoadingKey, this._timeoutId);
 
     return loadingId;
