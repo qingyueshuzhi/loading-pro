@@ -34,6 +34,6 @@ import { LoadingProService } from 'loading-pro';
 export class AppComponent {
   title = 'demo';
   constructor(private loading: LoadingProService) {
-    this.loading.show();
+   console.log(this.loading.show());
   }
 }

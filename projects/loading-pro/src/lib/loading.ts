@@ -81,7 +81,7 @@ export class LoadingProService {
     this._individualLoadingIdSet.delete(id);
   }
 
-  public show(id?: string): string {
+  public start(id?: string): string {
     let loadingId: string = id ?? nanoid(8);
     this._loading.next({ loading: true, id: loadingId });
     this._spinnerService.show();
@@ -100,7 +100,7 @@ export class LoadingProService {
     return loadingId;
   }
 
-  public hide(id: string): void {
+  public stop(id: string): void {
     if (this._loadingIdSet.has(id)) {
       this._loadingIdSet.delete(id);
     }
@@ -116,6 +116,22 @@ export class LoadingProService {
       Array.from(this._loadingIdSet).join(',')
     );
     this.end();
+  }
+
+  /**
+   * @deprecated going to remove at v1.2.0, please use "start()"
+   * @param id string
+   */
+  public show(id?: string) {
+    this.start(id);
+  }
+
+  /**
+   * @deprecated going to remove at v1.2.0, please use "stop()"
+   * @param id string
+   */
+  public hide(id: string) {
+    this.stop(id);
   }
 
   private end() {

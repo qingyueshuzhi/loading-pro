@@ -41,19 +41,19 @@ const options = {
 const loading =  new LoadingProService(options);
 
 ```
-------------------
+
+---
+
 ### Start a loading call
 
 call this method to start a loading call, if user didn't inject id
-will return a random id. 
+will return a random id.
 
 > Tips: recommend give an Id for loading, so you can clear see which loading not finished.
 
 ```typescript
-
-const loadingId = loading.show("getUserLoading"); // loadingId = 'getUserLoading'
-const loadingId = loading.show(); // loadingId = {A random shot id}
-
+const loadingId = loading.start("getUserLoading"); // loadingId = 'getUserLoading'
+const loadingId = loading.start(); // loadingId = {A random shot id}
 ```
 
 ### End a loading call
@@ -61,11 +61,13 @@ const loadingId = loading.show(); // loadingId = {A random shot id}
 call this method to stop a loading, need provide id
 
 ```typescript
-loading.hide(id); // Id for stop which loading
+loading.stop(id); // Id for stop which loading
 ```
 
--------------------------------------------
+---
+
 ### Individual loading will not plus in the normal loading, it has self life time.
+
 ### Start Individual Loading
 
 ```typescript
@@ -78,7 +80,7 @@ loading.startIndividualLoading(id?); // loadingId = given id or {A random shot i
 loading.stopIndividualLoading(id);
 ```
 
------------
+---
 
 ### Get loading status
 
@@ -110,24 +112,23 @@ loading.isLoading$.subscribe((status: ILoadingStatus) => {
 
 ### Other Method
 
-* update timeout
+- update timeout
 
 ```typescript
 loading.timeout = 80000;
 ```
 
-* check someone's loading status
+- check someone's loading status
 
 ```typescript
-loading.check(id);// check the given id is in loading status
+loading.check(id); // check the given id is in loading status
 ```
 
-* update show spinner
+- update show spinner
 
 ```typescript
 loading.showSpinner = show;
 ```
-
 
 ## Release Note
 
@@ -153,3 +154,4 @@ loading.showSpinner = show;
 ### Apr 12, 2023
 
 - Individual loading stop issue fix
+- update **show** and **hide** function to **start** and **stop**
