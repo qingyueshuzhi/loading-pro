@@ -17,3 +17,5 @@ export const defaultStyle = `
   }
 }
 </style>`;
+
+export const MAIN_LOADING_KEY = 'Main_Loading_key';

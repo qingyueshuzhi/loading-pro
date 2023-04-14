@@ -1,20 +1,18 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, tap } from 'rxjs';
 import { nanoid } from 'nanoid';
 
 import { ConsoleService } from './console';
 import { ILoading, ILoadingStatus } from './model';
 import { SpinnerService } from './spinner';
-import { defaultSVG, defaultStyle } from './constant';
+import { MAIN_LOADING_KEY, defaultSVG, defaultStyle } from './constant';
 
 export class LoadingProService {
   private readonly _loading: BehaviorSubject<ILoadingStatus> =
     new BehaviorSubject({ loading: false } as ILoadingStatus);
-  private _timeoutId!: ReturnType<typeof setTimeout>;
   private _timeout = 60000; // 60s
   private _loadingIdSet: Set<string> = new Set();
   private _individualLoadingIdSet: Set<string> = new Set();
   private _loggingService!: ConsoleService;
-  private readonly mainLoadingKey = 'Main_Loading';
   private _loadingMap: Map<string, ReturnType<typeof setTimeout>> = new Map();
   private _spinnerService: SpinnerService;
 
@@ -86,16 +84,16 @@ export class LoadingProService {
     this._loading.next({ loading: true, id: loadingId });
     this._spinnerService.show();
 
-    if (Boolean(this._timeoutId)) {
-      clearTimeout(this._timeoutId);
+    if (Boolean(this._loadingMap.has(MAIN_LOADING_KEY))) {
+      clearTimeout(this._loadingMap.get(MAIN_LOADING_KEY));
     }
-    this._timeoutId = setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       this.shutdown();
       this._loggingService.error('loading ended after timeout');
     }, this._timeout);
 
     this._loadingIdSet.add(loadingId);
-    this._loadingMap.set(this.mainLoadingKey, this._timeoutId);
+    this._loadingMap.set(MAIN_LOADING_KEY, timeoutId);
 
     return loadingId;
   }
@@ -135,8 +133,8 @@ export class LoadingProService {
   }
 
   private end() {
-    clearTimeout(this._timeoutId);
-    this._loadingMap.delete(this.mainLoadingKey);
+    clearTimeout(this._loadingMap.get(MAIN_LOADING_KEY));
+    this._loadingMap.delete(MAIN_LOADING_KEY);
     this._loadingIdSet.clear();
     this._loading.next({ loading: false });
     this._spinnerService.hide();

@@ -14,8 +14,8 @@ import { LoadingProService } from 'loading-pro';
           spinnerSlot: {
             style: `<style>
             .loading-pro-svg {
-              height: 40px;
-              width: 40px;
+              height: 100px;
+              width: 100px;
               fill: #666;
               animation: loadingCircle 1s infinite linear;
             }
@@ -34,6 +34,7 @@ import { LoadingProService } from 'loading-pro';
 export class AppComponent {
   title = 'demo';
   constructor(private loading: LoadingProService) {
-   console.log(this.loading.show());
+    console.log(this.loading.show());
+    this.loading.isLoading$.subscribe(console.error);
   }
 }

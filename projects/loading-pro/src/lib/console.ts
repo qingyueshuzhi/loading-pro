@@ -1,5 +1,6 @@
 export class ConsoleService {
-  private enableLog = false;
+  private readonly enableLog: boolean = false;
+
   constructor(enable: boolean) {
     this.enableLog = enable;
   }
