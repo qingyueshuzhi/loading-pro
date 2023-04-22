@@ -3,6 +3,8 @@ export interface ILoading {
   timeout?: number;
   logging?: boolean;
   spinnerSlot?: ISlot;
+  text?: string;
+  size?: number;
 }
 
 export interface ILoadingStatus {
@@ -13,14 +15,12 @@ export interface ILoadingStatus {
 export interface ISpinnerOption {
   show: boolean;
   slot: ISlot;
+  text: string;
+  size: number;
 }
 
 export interface ISlot {
-  template: string;
+  template?: string;
   style?: string;
+  color?: string;
 }
-
-// export interface ISize {
-//   width: number;
-//   height: number;
-// }

@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import { ConsoleService } from './console';
 import { ILoading, ILoadingStatus } from './model';
 import { SpinnerService } from './spinner';
-import { MAIN_LOADING_KEY, defaultSVG, defaultStyle } from './constant';
+import { MAIN_LOADING_KEY, defaultSVG, getDefaultStyle } from './constant';
 
 export class LoadingProService {
   private readonly _loading: BehaviorSubject<ILoadingStatus> =
@@ -23,8 +23,10 @@ export class LoadingProService {
       show: Boolean(options?.showSpinner),
       slot: {
         template: options?.spinnerSlot?.template ?? defaultSVG,
-        style: options?.spinnerSlot?.style ?? defaultStyle,
+        style: options?.spinnerSlot?.style ?? getDefaultStyle(options?.spinnerSlot?.color),
       },
+      text: options?.text ?? '',
+      size: options?.size ?? 16
     });
   }
 
@@ -34,6 +36,10 @@ export class LoadingProService {
 
   public set showSpinner(show: boolean) {
     this._spinnerService.showSpinner = show;
+  }
+
+  public set percentage(value: number) {
+    this._spinnerService.percentage = value;
   }
 
   public get isLoading() {
