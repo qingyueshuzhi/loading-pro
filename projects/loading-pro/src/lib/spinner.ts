@@ -1,21 +1,15 @@
 import { defaultSVG } from './constant';
 import { ISpinnerOption, ISlot } from './model';
 
-export class SpinnerService {
+export class Spinner {
   private _loadingContainer!: HTMLDivElement | null;
-  private _showSpinner = false;
   private _slot: ISlot;
   private _text: string;
   private _fontSize: number;
   constructor(private option: ISpinnerOption) {
-    this._showSpinner = option.show;
     this._slot = option.slot;
     this._text = option.text;
     this._fontSize = option.size;
-  }
-
-  public set showSpinner(value: boolean) {
-    this._showSpinner = value;
   }
 
   public set percentage(value: number) {
@@ -26,7 +20,7 @@ export class SpinnerService {
   }
 
   show() {
-    if (this._showSpinner && !this._loadingContainer) {
+    if (!this._loadingContainer) {
       this._loadingContainer = this.getSpinner(
         this._slot.template ?? defaultSVG,
         this._slot.style ?? ``,
@@ -44,7 +38,7 @@ export class SpinnerService {
     }
   }
 
-  getSpinner(svg: string, style: string, text: string) {
+  private getSpinner(svg: string, style: string, text: string) {
     const container = document.createElement('div');
     container.className = 'loading__pro-container';
     const defaultStyleEle = this.getDefaultStyle();

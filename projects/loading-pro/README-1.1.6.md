@@ -1,4 +1,4 @@
-# Loading-pro (V2.0.0)
+# Loading-pro
 
 A simple library for loading status management.
 
@@ -13,12 +13,15 @@ npm install loading-pro
 ### Use in project
 
 ```typescript
-import { LoadingPro, Spinner } from 'loading-pro';
+import { LoadingProService } from 'loading-pro';
+
 
 const options = {
     text: 'loading...',
+    showSpinner: true,
+    timeout: 6000,
     size: 24,
-    slot: {
+    spinnerSlot: {
         style: `<style>
           .loading-pro-svg {
               height: 100px;
@@ -36,15 +39,9 @@ const options = {
             color: '#e345e4',
           },, // spinnerSlot and style are optional.
 };
-const spinner = new Spinner(options);
 
-const loadingOptions = {
-  timeout: 8000,
-  spinner: spinner
-}
+const loading =  new LoadingProService(options);
 
-const loading =  new LoadingPro(loadingOptions?); // option is optional here
-loading.spinner = spinner;
 ```
 
 ---
@@ -68,6 +65,7 @@ call this method to stop a loading, need provide id
 ```typescript
 loading.stop(id); // Id for stop which loading
 ```
+
 ---
 
 ### Individual loading will not plus in the normal loading, it has self life time.
@@ -91,36 +89,27 @@ loading.stopIndividualLoading(id);
 here i offered two way to get loading status, one is a attribute called **"isLoading"**
 
 ```typescript
-loading.isLoading; // true
+/**
+ * loading: is current in a loading status
+ * id: the last loading id
+ */
+interface ILoadingStatus {
+  loading: boolean;
+  id?: string;
+}
 ```
 
-if you want to get the id list which is in loading status
-
 ```typescript
-loading.activeItems; // ['loading1', 'loading2']
+loading.isLoading; // {loading: true, id: '***'}
 ```
 
-another way to get loading status is callback function.
-you can set the callback function to **loadingStateChangeHandler**
-this handler will be called every time the status change
+another way to get loading status is an Observable stream.
+if you familiar with Rxjs, you should like this way.
 
 ```typescript
-  interface ILoadingStateChange {
-    newState: boolean;
-  }
-
-  loading.loadingStateChangeHandler = ({newState}: ILoadingStateChange) => {
-    console.log(newState); // true
-  }
-```
-
-for the case loading running to timeout, we will shutdown the loading. and there is a callback function
-can get the unfinished items.
-
-```typescript
-  loading.shutdownHandler = (unfinishedIds: string[]) => {
-    console.log(unfinishedIds); // ['1', '2', '3']
-  }
+loading.isLoading$.subscribe((status: ILoadingStatus) => {
+  console.log(status); // {loading: true, id: '***'}
+});
 ```
 
 ### Other Method
@@ -137,23 +126,19 @@ loading.timeout = 80000;
 loading.check(id); // check the given id is in loading status
 ```
 
-### Spinner
+- update show spinner
+
+```typescript
+loading.showSpinner = show;
+```
+
 - update percentage value
 
 ```typescript
-spinner.percentage = value;
+loading.percentage = value;
 ```
 
 ## Release Note
-
-### July 13, 2023 (Breaking Change)
-version: 2.0.0
-- refactor LoadingProService to LoadingPro
-- move spinner out of LoadingPro, and user need manual construct
-- remove rxjs
-- add loadingStateChangeHandler and shutdownHandler callback hooks
-
-make it more easier to use
 
 ### Apr 5, 2023
 

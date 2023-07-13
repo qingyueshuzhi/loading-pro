@@ -1,8 +1,11 @@
-export class ConsoleService {
-  private readonly enableLog: boolean = false;
+export class LogManager {
+  private enableLog: boolean = true;
 
-  constructor(enable: boolean) {
-    this.enableLog = enable;
+  constructor() {
+  }
+
+  set enable(value: boolean) {
+    this.enableLog = value;
   }
 
   log(...arg: any[]) {

@@ -1,12 +1,11 @@
 {
   "name": "loading-pro",
-  "version": "1.1.6",
+  "version": "2.0.0",
   "author": "Mien",
   "license": "MIT",
   "peerDependencies": {},
   "dependencies": {
     "tslib": "^2.3.0",
-    "rxjs": "~7.8.0",
     "nanoid": "^4.0.2"
   },
   "sideEffects": false,

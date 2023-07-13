@@ -1,6 +1,7 @@
-import { LoadingProService } from './loading';
+import { LoadingPro } from './loading';
 
-(window as any)['LoadingService'] = LoadingProService;
+(window as any)['LoadingService'] = LoadingPro;
 
 export * from './loading';
 export * from './model';
+export * from './spinner'
